@@ -9,9 +9,15 @@ use App\Http\Requests\TweetRequest;
 
 class TweetController extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
-    $tweets = Tweet::with('user')->latest()->get();
+    $query = Tweet::with('user')->whereNull('parent_id')->latest();
+
+    if ($keyword = $request->input('keyword')) {
+      $query->where('content', 'like', '%' . $keyword . '%');
+    }
+
+    $tweets = $query->paginate(10);
     return view('index', compact('tweets'));
   }
   public function create()
@@ -23,6 +29,7 @@ class TweetController extends Controller
     Tweet::create([
       'user_id' => Auth::id(),
       'content' => $request->input('content'),
+      'parent_id' => $request->input('parent_id'), // 追加
     ]);
 
     return redirect()->route('home')->with('success', '投稿が完了しました！');
