@@ -14,7 +14,9 @@ COPY . /var/www
 RUN chown -R www-data:www-data /var/www \
   && chmod -R 755 /var/www/storage /var/www/bootstrap/cache
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction \
+  && php artisan migrate --force
+
 
 EXPOSE 8000
 
