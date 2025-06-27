@@ -1,13 +1,23 @@
-FROM php:7.4.9-fpm
+FROM php:8.0-fpm
 
 COPY php.ini /usr/local/etc/php/
 
-RUN apt update \
-  && apt install -y default-mysql-client zlib1g-dev libzip-dev unzip \
-  && docker-php-ext-install pdo_mysql zip
+RUN apt-get update \
+  && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev zip git unzip curl libonig-dev libxml2-dev \
+  && docker-php-ext-configure gd --with-freetype --with-jpeg \
+  && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-RUN curl -sS https://getcomposer.org/installer | php \
-  && mv composer.phar /usr/local/bin/composer \
-  && composer self-update
+COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
+
+COPY . /var/www
+
+RUN chown -R www-data:www-data /var/www \
+  && chmod -R 755 /var/www/storage /var/www/bootstrap/cache
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+EXPOSE 8000
+
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
