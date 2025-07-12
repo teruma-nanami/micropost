@@ -1,28 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
-    <h2>パスワード再設定</h2>
-    <form method="POST" action="{{ route('password.email') }}" class="form">
-      @csrf
-      <div class="form__inner">
-        <p>パスワードを忘れてしまった場合、メールアドレスを入力してください。</p>
-        <div class="form__inner-text">
-          <label for="email">メールアドレス</label>
-          <input id="email" type="email" name="email" placeholder="email" required autofocus>
+<div class="container mt-5" style="max-width: 400px;">
+  <div class="card shadow">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">パスワード再設定</h2>
+      <form method="POST" action="{{ route('password.email') }}">
+        @csrf
+        <p class="mb-3">パスワードを忘れてしまった場合、メールアドレスを入力してください。</p>
+        <div class="mb-3">
+          <label for="email" class="form-label">メールアドレス</label>
+          <input id="email" type="email" name="email" class="form-control" placeholder="email" required autofocus>
         </div>
-        <div class="form__button">
-          <button type="submit">送信</button>
-        </div>
+        <button type="submit" class="btn btn-warning w-100">送信</button>
+      </form>
+      <div class="mt-3 text-center">
+        <a href="{{ asset('login') }}" class="text-decoration-none">ログインはこちら</a><br>
+        <a href="{{ asset('register') }}" class="text-decoration-none">会員登録はこちら</a>
       </div>
-    </form>
-    <div class="login__link">
-      <p>
-        <a href="{{ asset('login') }}">ログインはこちら</a>
-      </p>
-      <p>
-        <a href="{{ asset('register') }}">会員登録はこちら</a>
-      </p>
     </div>
   </div>
+</div>
 @endsection
