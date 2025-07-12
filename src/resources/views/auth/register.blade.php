@@ -1,49 +1,43 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
-    <h2>会員登録</h2>
-    <form action="/register" method="post" class="form">
-      @csrf
-      <div class="form__inner">
-        <div class="form__inner-text">
-          <label for="name">ユーザー名
-            <input type="text" name="name" placeholder="Username" value="{{ old('name') }}"></label>
-        </div>
-        <div class="form__error">
+<div class="container mt-5" style="max-width: 400px;">
+  <div class="card shadow">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">会員登録</h2>
+      <form action="/register" method="post">
+        @csrf
+        <div class="mb-3">
+          <label for="name" class="form-label">ユーザー名</label>
+          <input type="text" name="name" id="name" class="form-control" placeholder="Username" value="{{ old('name') }}" required autofocus>
           @error('name')
-            {{ $message }}
+            <div class="alert alert-danger py-1 mt-2">{{ $message }}</div>
           @enderror
         </div>
-        <div class="form__inner-text">
-          <label for="email">メールアドレス
-            <input type="text" name="email" placeholder="email" value="{{ old('email') }}"></label>
-        </div>
-        <div class="form__error">
+        <div class="mb-3">
+          <label for="email" class="form-label">メールアドレス</label>
+          <input type="email" name="email" id="email" class="form-control" placeholder="email" value="{{ old('email') }}" required>
           @error('email')
-            {{ $message }}
+            <div class="alert alert-danger py-1 mt-2">{{ $message }}</div>
           @enderror
         </div>
-        <div class="form__inner-text">
-          <label for="password">パスワード
-            <input type="password" name="password" placeholder="password"></label>
-        </div>
-        <div class="form__error">
+        <div class="mb-3">
+          <label for="password" class="form-label">パスワード</label>
+          <input type="password" name="password" id="password" class="form-control" placeholder="password" required>
           @error('password')
-            {{ $message }}
+            <div class="alert alert-danger py-1 mt-2">{{ $message }}</div>
           @enderror
         </div>
-        <div class="form__inner-text">
-          <label for="password_confirmation">確認用パスワード
-            <input type="password" name="password_confirmation" placeholder="password_confirmation"></label>
+        <div class="mb-3">
+          <label for="password_confirmation" class="form-label">確認用パスワード</label>
+          <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="password_confirmation" required>
         </div>
-        <div class="form__button">
-          <button type="submit">登録する</button>
-        </div>
+        <button type="submit" class="btn btn-success w-100">登録する</button>
+      </form>
+      <div class="mt-3 text-center">
+        <a href="{{ asset('login') }}" class="text-decoration-none">ログインはこちら</a>
       </div>
-    </form>
-    <div class="login__link">
-      <p><a href="{{ asset('login') }}">ログインはこちら</a></p>
     </div>
   </div>
+</div>
 @endsection

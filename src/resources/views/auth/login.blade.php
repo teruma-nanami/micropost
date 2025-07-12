@@ -1,46 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
-    <h2>ログイン</h2>
-    <form action="/login" method="post" class="form">
-      @csrf
-      <div class="form__inner">
-        <div class="form__inner-text">
-          <label for="email">メールアドレス
-            <input type="text" name="email" placeholder="email"></label>
-        </div>
-        <div class="form__error">
+<div class="container mt-5" style="max-width: 400px;">
+  <div class="card shadow">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">ログイン</h2>
+      <form action="/login" method="post">
+        @csrf
+        <div class="mb-3">
+          <label for="email" class="form-label">メールアドレス</label>
+          <input type="email" name="email" id="email" class="form-control" placeholder="email" required autofocus>
           @error('email')
-            {{ $message }}
+            <div class="alert alert-danger py-1 mt-2">{{ $message }}</div>
           @enderror
         </div>
-        <div class="form__inner-text">
-          <label for="password">パスワード
-            <input type="password" name="password" placeholder="Password"></label>
-        </div>
-        <div class="form__error">
+        <div class="mb-3">
+          <label for="password" class="form-label">パスワード</label>
+          <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
           @error('password')
-            {{ $message }}
+            <div class="alert alert-danger py-1 mt-2">{{ $message }}</div>
           @enderror
         </div>
-        <div class="form__inner-check">
-          <label for="remember_me">
-            <input id="remember_me" type="checkbox" name="remember"><span> ログイン状態を保存する</span>
-          </label>
+        <div class="form-check mb-3">
+          <input id="remember_me" type="checkbox" name="remember" class="form-check-input">
+          <label for="remember_me" class="form-check-label">ログイン状態を保存する</label>
         </div>
-        <div class="form__button">
-          <button type="submit">ログインする</button>
-        </div>
+        <button type="submit" class="btn btn-primary w-100">ログインする</button>
+      </form>
+      <div class="mt-3 text-center">
+        <a href="{{ asset('forgot-password') }}" class="text-decoration-none">パスワードを忘れてしまった方はこちら</a>
       </div>
-    </form>
-    <div class="login__link">
-      <p>
-        <a href="{{ asset('forgot-password') }}">パスワードを忘れてしまった方はこちら</a>
-      </p>
-      <p>
-        <a href="{{ asset('register') }}">会員登録はこちら</a>
-      </p>
     </div>
   </div>
+</div>
 @endsection

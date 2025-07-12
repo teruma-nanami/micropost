@@ -8,7 +8,7 @@
 @endif
 <form method="GET" action="{{ route('home') }}" class="mb-4 d-flex" role="search">
   <input type="text" name="keyword" class="form-control me-2" placeholder="投稿を検索">
-  <button type="submit" class="btn btn-outline-primary">検索</button>
+  <button type="submit" class="btn btn-outline-primary" style="min-width: 80px;">検索</button>
 </form>
 @foreach($tweets as $tweet)
 <div class="card mb-3">
