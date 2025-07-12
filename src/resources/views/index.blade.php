@@ -64,6 +64,6 @@
 
 @endforeach
 <div class="d-flex justify-content-center">
-  {{ $tweets->links() }}
+  {{ $tweets->links('pagination::bootstrap-4') }}
 </div>
 @endsection
